@@ -46,13 +46,40 @@ class App extends Component {
     // if (!this.state.web3) {
     //   return <div>Loading Web3, accounts, and contract...</div>;
     // }
+
+    const styles = {
+      container: {
+        width: '100%',
+        paddingTop: '150px',
+        textAlign: 'center',
+      },
+      button: {
+        background: 'black',
+        color: 'white',
+        borderRadius: '10px',
+        textAlign: 'center',
+        width: '150px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        padding: '20px',
+        marginTop: '30px',
+        fontWeight: 'bold',
+        cursor: 'pointer',
+      }
+    }
+
     return (
-      <div className="App">
+      <div style={styles.container}>
         <h3>MICIN</h3>
         <h1>CuronCoin</h1>
         <h2>Airdrop</h2>
 
-        <div>aaa</div>
+        <div 
+          style={styles.button}
+          onClick={() => window.location.href = "https://forms.gle/KtsC5MNVdGwWnxnFA"}
+        >
+          Resister
+        </div>
       </div>
     );
   }
