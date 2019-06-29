@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CuronCoin from "./contracts/CuronCoin.json";
 import getWeb3 from "./utils/getWeb3";
+import * as axios from 'axios';
 
 class App extends Component {
   state = { 
@@ -8,16 +9,20 @@ class App extends Component {
     accounts: null, 
     instance: null,
     value: 0,
-    ethPrice: 0,
+    rate: 0,
   };
+
+  ethPrice() {
+    return Math.round(this.state.value * (0.02 /this.state.rate) * 1000000) / 1000000;
+  }
 
   componentDidMount = async () => {
     try {
       const web3 = await getWeb3();
       const accounts = await web3.eth.getAccounts();
       const instance = new web3.eth.Contract(CuronCoin.abi, CuronCoin.address);
-      console.warn(CuronCoin.address);
-      this.setState({ web3, accounts, instance });
+      const ethjpy = await axios.get('https://api.coinmarketcap.com/v2/ticker/1027/?convert=JPY');
+      this.setState({ web3, accounts, instance, rate: ethjpy.data.data.quotes.JPY.price });
     } catch (error) {
       alert(`Failed to load web3, accounts, or contract. Check console for details.`);
     }
@@ -77,7 +82,7 @@ class App extends Component {
           value={this.state.value} 
           onChange={(e) => this.setState({value: e.target.value})}
         />
-        <div style={styles.ethPrice}>{this.state.ethPrice}ETH</div>
+        <div style={styles.ethPrice}>{this.ethPrice()}ETH</div>
         <div
           style={styles.button}
           onClick={() => this.buyCoin()}

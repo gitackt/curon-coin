@@ -338,10 +338,10 @@
           }
         ],
         "contractDependencies": [
-          278,
           321,
-          353,
-          600
+          278,
+          600,
+          353
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -744,10 +744,10 @@
           }
         ],
         "contractDependencies": [
-          278,
           321,
-          353,
-          600
+          278,
+          600,
+          353
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -1109,7 +1109,7 @@
     }
   },
   "schemaVersion": "3.0.11",
-  "updatedAt": "2019-06-29T11:23:25.164Z",
+  "updatedAt": "2019-06-29T21:00:51.296Z",
   "devdoc": {
     "methods": {
       "allowance(address,address)": {
