@@ -1,51 +1,36 @@
 import React, { Component } from "react";
-// import CuronCoinContract from "./contracts/CuronCoin.json";
-// import getWeb3 from "./utils/getWeb3";
-
-import "./App.css";
+import CuronCoin from "./contracts/CuronCoin.json";
+import getWeb3 from "./utils/getWeb3";
 
 class App extends Component {
-  state = { storageValue: 0, web3: null, accounts: null, contract: null };
+  state = { 
+    web3: null, 
+    accounts: null, 
+    instance: null,
+    value: 0,
+    ethPrice: 0,
+  };
 
-  // componentDidMount = async () => {
-  //   try {
-  //     // Get network provider and web3 instance.
-  //     const web3 = await getWeb3();
+  componentDidMount = async () => {
+    try {
+      const web3 = await getWeb3();
+      const accounts = await web3.eth.getAccounts();
+      const instance = new web3.eth.Contract(CuronCoin.abi, CuronCoin.address);
+      console.warn(CuronCoin.address);
+      this.setState({ web3, accounts, instance });
+    } catch (error) {
+      alert(`Failed to load web3, accounts, or contract. Check console for details.`);
+    }
+  };
 
-  //     // Use web3 to get the user's accounts.
-  //     const accounts = await web3.eth.getAccounts();
-
-  //     // Get the contract instance.
-  //     const networkId = await web3.eth.net.getId();
-  //     const deployedNetwork = CuronCoinContract.networks[networkId];
-  //     const instance = new web3.eth.Contract(
-  //       CuronCoinContract.abi,
-  //       deployedNetwork && deployedNetwork.address,
-  //     );
-
-  //     // Set web3, accounts, and contract to the state, and then proceed with an
-  //     // example of interacting with the contract's methods.
-  //     this.setState({ web3, accounts, contract: instance }, this.runExample);
-  //   } catch (error) {
-  //     // Catch any errors for any of the above operations.
-  //     alert(
-  //       `Failed to load web3, accounts, or contract. Check console for details.`,
-  //     );
-  //     console.error(error);
-  //   }
-  // };
-
-  // runExample = async () => {
-  //   const { accounts, contract, web3 } = this.state;
-  //   const token = new web3.eth.Contract(contract.abi, contract.address)
-  //   console.warn(accounts[0]);
-  //   console.warn(token);
-  // };
+  buyCoin = async () => {
+    alert(this.state.instance.methods.name().call())
+  };
 
   render() {
-    // if (!this.state.web3) {
-    //   return <div>Loading Web3, accounts, and contract...</div>;
-    // }
+    if (!this.state.web3) {
+      return <div>Loading Web3, accounts, and contract...</div>;
+    }
 
     const styles = {
       container: {
@@ -65,6 +50,17 @@ class App extends Component {
         marginTop: '30px',
         fontWeight: 'bold',
         cursor: 'pointer',
+      },
+      ethPrice: {
+        marginTop: '10px',
+        fontSize: '12px',
+        color: '#595959',
+      },
+      inputForm: {
+        borderRadius: '10px',
+        border: '1px solid #595959',
+        padding: '10px',
+        marginTop: '30px'
       }
     }
 
@@ -72,13 +68,21 @@ class App extends Component {
       <div style={styles.container}>
         <h3>MICIN</h3>
         <h1>CuronCoin</h1>
-        <h2>Airdrop</h2>
 
-        <div 
+        <input 
+          type="text" 
+          name="value" 
+          style={styles.inputForm}
+          placeholder="MCM amount"
+          value={this.state.value} 
+          onChange={(e) => this.setState({value: e.target.value})}
+        />
+        <div style={styles.ethPrice}>{this.state.ethPrice}ETH</div>
+        <div
           style={styles.button}
-          onClick={() => window.location.href = "https://forms.gle/KtsC5MNVdGwWnxnFA"}
+          onClick={() => this.buyCoin()}
         >
-          Resister
+          Buy Token
         </div>
       </div>
     );
