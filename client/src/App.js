@@ -36,7 +36,7 @@ class App extends Component {
   };
 
   ethPrice() {
-    return Math.round(this.state.value * (0.02 /this.state.rate) * 1000000) / 1000000;
+    return Math.round(this.state.value * (0.01 /this.state.rate) * 1000000) / 1000000;
   }
 
   render() {
@@ -93,13 +93,9 @@ class App extends Component {
           value={this.state.value} 
           onChange={(e) => this.setState({value: e.target.value})}
         />
+
         <div style={styles.ethPrice}>{this.ethPrice()}ETH</div>
-        <div
-          style={styles.button}
-          onClick={() => this.buyCoin()}
-        >
-          Buy Token
-        </div>
+        <div style={styles.button} onClick={() => this.buyCoin()}>Buy Token</div>
         {this.state.error !== null && <div style={styles.errorMessage}>{this.state.error}</div>}
       </div>
     );
