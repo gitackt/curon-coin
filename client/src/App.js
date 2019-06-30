@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CuronCoin from "./contracts/CuronCoin.json";
+import CuronCoinContract from "./contracts/CuronCoin.json";
 import getWeb3 from "./utils/getWeb3";
 import * as axios from 'axios';
 
@@ -10,17 +10,14 @@ class App extends Component {
     instance: null,
     value: 0,
     rate: 0,
+    error: null,
   };
-
-  ethPrice() {
-    return Math.round(this.state.value * (0.02 /this.state.rate) * 1000000) / 1000000;
-  }
 
   componentDidMount = async () => {
     try {
       const web3 = await getWeb3();
       const accounts = await web3.eth.getAccounts();
-      const instance = new web3.eth.Contract(CuronCoin.abi, CuronCoin.address);
+      const instance = new web3.eth.Contract(CuronCoinContract.abi, CuronCoinContract['networks']['5777']['address']);
       const ethjpy = await axios.get('https://api.coinmarketcap.com/v2/ticker/1027/?convert=JPY');
       this.setState({ web3, accounts, instance, rate: ethjpy.data.data.quotes.JPY.price });
     } catch (error) {
@@ -29,8 +26,18 @@ class App extends Component {
   };
 
   buyCoin = async () => {
-    alert(this.state.instance.methods.name().call())
+    if (this.state.value !== 0 && this.state.value !== null && !isNaN(this.state.value)) {
+      this.setState({error: null})
+      console.warn(this.state.instance.methods.name().call());
+
+    } else {
+      this.setState({error: "Please input valid CURON amount."})  
+    }
   };
+
+  ethPrice() {
+    return Math.round(this.state.value * (0.02 /this.state.rate) * 1000000) / 1000000;
+  }
 
   render() {
     if (!this.state.web3) {
@@ -66,6 +73,10 @@ class App extends Component {
         border: '1px solid #595959',
         padding: '10px',
         marginTop: '30px'
+      },
+      errorMessage: {
+        margin: '20px',
+        color: 'red'
       }
     }
 
@@ -78,7 +89,7 @@ class App extends Component {
           type="text" 
           name="value" 
           style={styles.inputForm}
-          placeholder="MCM amount"
+          placeholder="CURON amount"
           value={this.state.value} 
           onChange={(e) => this.setState({value: e.target.value})}
         />
@@ -89,6 +100,7 @@ class App extends Component {
         >
           Buy Token
         </div>
+        {this.state.error !== null && <div style={styles.errorMessage}>{this.state.error}</div>}
       </div>
     );
   }
