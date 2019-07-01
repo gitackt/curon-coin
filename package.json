@@ -21,6 +21,6 @@
   },
   "homepage": "https://github.com/gitackt/curon-coin#readme",
   "dependencies": {
-    "zeppelin-solidity": "^1.12.0"
+    "openzeppelin-solidity": "^2.3.0"
   }
 }

@@ -1,13 +1,9 @@
-pragma solidity ^0.4.24;
-import "zeppelin-solidity/contracts/token/ERC20/StandardToken.sol";
+pragma solidity ^0.5.0;
+import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import "openzeppelin-solidity/contracts/token/ERC20/ERC20Detailed.sol";
 
-contract CuronCoin is StandardToken {
-  string public name = "CuronCoin";
-  string public symbol = "CURON";
-  uint public decimals = 18;
-
-  function InitializeToken(uint initialSupply) public {
-    totalSupply_ = initialSupply;
-    balances[msg.sender] = initialSupply;
+contract CuronCoin is ERC20, ERC20Detailed {
+  constructor(uint256 initialSupply) ERC20Detailed("CuronCoin", "CURON", 18) public {
+    _mint(msg.sender, initialSupply);
   }
 }
