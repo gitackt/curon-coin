@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import CuronCoinContract from "./contracts/CuronCoin.json";
-import getWeb3 from "./utils/getWeb3";
+import Web3 from "web3";
 import * as axios from 'axios';
+
+import CuronCoinContract from "./contracts/CuronCoin.json";
+import { nodeUrlDev } from './urls';
 
 class App extends Component {
   state = { 
@@ -15,11 +17,21 @@ class App extends Component {
 
   componentDidMount = async () => {
     try {
-      const web3 = await getWeb3();
+      const provider = new Web3.providers.HttpProvider(nodeUrlDev);
+      const web3 = new Web3(provider);
+
       const accounts = await web3.eth.getAccounts();
       const instance = new web3.eth.Contract(CuronCoinContract.abi, CuronCoinContract['networks']['5777']['address']);
+
       const ethjpy = await axios.get('https://api.coinmarketcap.com/v2/ticker/1027/?convert=JPY');
-      this.setState({ web3, accounts, instance, rate: ethjpy.data.data.quotes.JPY.price });
+
+      this.setState({ 
+        web3, 
+        accounts, 
+        instance, 
+        rate: ethjpy.data.data.quotes.JPY.price
+      });
+
     } catch (error) {
       alert(`Failed to load web3, accounts, or contract. Check console for details.`);
     }
@@ -28,7 +40,11 @@ class App extends Component {
   buyCoin = async () => {
     if (this.state.value !== 0 && this.state.value !== null && !isNaN(this.state.value)) {
       this.setState({error: null})
-      console.warn(this.state.instance.methods.name().call());
+      this.state.instance.methods.name().call().then(value => {
+        console.warn(value);
+      }).catch(e => {
+        alert(`Cannot acccess smart contract.`);
+      })
 
     } else {
       this.setState({error: "Please input valid CURON amount."})  
