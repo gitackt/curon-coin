@@ -184,8 +184,8 @@
           }
         ],
         "contractDependencies": [
-          375,
-          1302
+          1302,
+          375
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -434,8 +434,8 @@
           }
         ],
         "contractDependencies": [
-          375,
-          1302
+          1302,
+          375
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -643,7 +643,7 @@
     }
   },
   "schemaVersion": "3.0.11",
-  "updatedAt": "2019-07-01T12:05:39.395Z",
+  "updatedAt": "2019-07-03T09:40:25.408Z",
   "devdoc": {
     "methods": {
       "buyTokens(address)": {
