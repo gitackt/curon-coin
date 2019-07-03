@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import Web3 from "web3";
-import * as axios from 'axios';
 
-import CuronCoinContract from "./contracts/CuronCoin.json";
-import { nodeUrlDev, ethPriceUrl } from './urls';
+import CuronCoinSaleContract from "./contracts/CuronCoinSale.json";
+import { nodeUrlDev } from './urls';
 
 class App extends Component {
   state = { 
@@ -11,7 +10,6 @@ class App extends Component {
     accounts: null, 
     instance: null,
     value: 0,
-    rate: 0,
   };
 
   componentDidMount = async () => {
@@ -19,16 +17,12 @@ class App extends Component {
       const provider = new Web3.providers.HttpProvider(nodeUrlDev);
       const web3 = new Web3(provider);
   
-      const accounts = web3.eth.getAccounts();
-  
+      const accounts = await web3.eth.getAccounts();
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = CuronCoinContract.networks[networkId];
-      const instance = new web3.eth.Contract(CuronCoinContract.abi, deployedNetwork.address);
+      const deployedNetwork = CuronCoinSaleContract.networks[networkId];
+      const instance = new web3.eth.Contract(CuronCoinSaleContract.abi, deployedNetwork.address);
   
-      const ethPriceResponse = await axios.get(ethPriceUrl);
-      const rate = ethPriceResponse.data.data.quotes.JPY.price;
-  
-      this.setState({ web3, accounts, instance, rate });
+      this.setState({ web3, accounts, instance });
 
     } catch (error) {
       alert(`Failed to load web3, accounts, or contract. Check console for details.`);
@@ -37,19 +31,22 @@ class App extends Component {
 
   buyCoin = async () => {
     if (this.state.value !== 0 && this.state.value !== null && !isNaN(this.state.value)) {
-      this.state.instance.methods.name().call().then(value => {
-        console.warn(value);
-      }).catch(e => {
-        alert(`Cannot acccess smart contract.`);
-      })
+      this.state.instance.methods.buyTokens(
+        this.state.accounts[0]).send(
+          {
+            value: this.state.web3.utils.toWei(this.state.value, "ether"), 
+            from: this.state.accounts[1],
+            gas: 1000000
+          }
+        ).then(value => {
+          alert(`Success!`);
+        }).catch(e => {
+          alert(e);
+        })
     } else {
       alert(`Please input valid CURON amount.`);
     }
   };
-
-  ethPrice() {
-    return Math.round(this.state.value * (0.01 /this.state.rate) * 1000000) / 1000000;
-  }
 
   render() {
     if (!this.state.web3) {
@@ -96,17 +93,17 @@ class App extends Component {
       <div style={styles.container}>
         <h3>MICIN</h3>
         <h1>CuronCoin</h1>
+        <h2>CURON</h2>
 
         <input 
           type="text" 
           name="value" 
           style={styles.inputForm}
-          placeholder="CURON amount"
+          placeholder="ETH amount"
           value={this.state.value} 
           onChange={(e) => this.setState({value: e.target.value})}
         />
 
-        <div style={styles.ethPrice}>{this.ethPrice()}ETH</div>
         <div style={styles.button} onClick={() => this.buyCoin()}>Buy Token</div>
       </div>
     );
