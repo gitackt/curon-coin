@@ -364,9 +364,9 @@
           }
         ],
         "contractDependencies": [
-          905,
           963,
-          1032
+          1032,
+          905
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -693,9 +693,9 @@
           }
         ],
         "contractDependencies": [
-          905,
           963,
-          1032
+          1032,
+          905
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -994,12 +994,12 @@
         }
       },
       "links": {},
-      "address": "0x1DC5414e88A037FA2054B790D32C6a09d5133211",
-      "transactionHash": "0xfdf8bb39800aa22c1a1040ae95a106ac294d687daf140c7f1b78ace64782bd11"
+      "address": "0xFD630B7955f36534e02F53a66B10B8CD84A06728",
+      "transactionHash": "0x23471092d2bf5195c3bc048e8511f4c739c57e0b22bbf3a76015e02f76d63db7"
     }
   },
   "schemaVersion": "3.0.11",
-  "updatedAt": "2019-07-03T09:40:25.405Z",
+  "updatedAt": "2019-07-03T13:58:26.182Z",
   "devdoc": {
     "methods": {
       "allowance(address,address)": {
