@@ -9,7 +9,7 @@ class App extends Component {
     web3: null, 
     instance: null,
     users: null,
-    value: null,
+    value: '',
   };
 
   componentDidMount = async () => {
