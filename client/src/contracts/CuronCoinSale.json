@@ -638,12 +638,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xc3E84C381720e2C1770c930C1d00f95F03CB3Fd2",
-      "transactionHash": "0x693b2b56ffe7970046cf2d9df3cc3f1d5c68c6cd2a14206e0e5505f8f2b3a84c"
+      "address": "0xffFA6DfDBC6A828aebF639d35304800Eca2e288C",
+      "transactionHash": "0x14c658d3aecdb4fbeaa46fe962b3191c2f838eaf79d131828fff1f741d935aaa"
     }
   },
   "schemaVersion": "3.0.11",
-  "updatedAt": "2019-07-03T13:58:26.187Z",
+  "updatedAt": "2019-07-10T14:02:30.563Z",
   "devdoc": {
     "methods": {
       "buyTokens(address)": {
