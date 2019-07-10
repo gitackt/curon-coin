@@ -2,27 +2,27 @@ import React, { Component } from "react";
 import Web3 from "web3";
 
 import CuronCoinSaleContract from "./contracts/CuronCoinSale.json";
-import { nodeUrlDev } from './urls';
+import { nodeUrl } from './urls';
 
 class App extends Component {
   state = { 
     web3: null, 
-    accounts: null, 
     instance: null,
-    value: 0,
+    users: null,
+    value: null,
   };
 
   componentDidMount = async () => {
     try {
-      const provider = new Web3.providers.HttpProvider(nodeUrlDev);
+      const provider = new Web3.providers.HttpProvider(nodeUrl);
       const web3 = new Web3(provider);
   
-      const accounts = await web3.eth.getAccounts();
+      const users = await web3.eth.getAccounts();
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = CuronCoinSaleContract.networks[networkId];
       const instance = new web3.eth.Contract(CuronCoinSaleContract.abi, deployedNetwork.address);
   
-      this.setState({ web3, accounts, instance });
+      this.setState({ web3, instance, users });
 
     } catch (error) {
       alert(`Failed to load web3, accounts, or contract. Check console for details.`);
@@ -31,20 +31,14 @@ class App extends Component {
 
   buyCoin = async () => {
     if (this.state.value !== 0 && this.state.value !== null && !isNaN(this.state.value)) {
-      this.state.instance.methods.buyTokens(
-        this.state.accounts[0]).send(
-          {
-            value: this.state.web3.utils.toWei(this.state.value, "ether"), 
-            from: this.state.accounts[1],
-            gas: 1000000
-          }
-        ).then(value => {
-          alert(`Success!`);
-        }).catch(e => {
-          alert(e);
-        })
+
+      const weiAmount = this.state.web3.utils.toWei(this.state.value, "ether");
+      this.state.instance.methods
+        .buyTokens(this.state.users[0])
+        .send({value: weiAmount, from: this.state.users[0]}).on('transactionHash', hash => console.warn(hash));
+
     } else {
-      alert(`Please input valid CURON amount.`);
+      alert(`Please input valid ETH amount.`);
     }
   };
 
