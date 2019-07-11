@@ -3,33 +3,52 @@ crypto currency for クロンちゃん
 
 ## Settings
 ### Install
-you need to install -g truffle. 
+#### Install Truffle
 ```
 npm install -g truffle
 ```
 
-### Import Address
-#### 1: you can get addresses by ruuning this command.
-```
-truffle develop
-```
-#### 2: open chrome browser and metamask wallet addon.
-(need to install metamask https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=ja)
+#### Install Gnache
+https://www.trufflesuite.com/ganache
 
-#### 3: choose import accounts tab.
+
+### Import Address
+#### 1: open chrome browser and metamask wallet addon.
+install metamask
+https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=ja
+
+#### 2: choose import accounts tab.
 <img src="docs/one.png" width="200px">
 
-#### 4: copy accounts[0] private address (your coinbase address).
-<img src="docs/two.png" width="200px">
+#### 3: copy accounts[0] private key (your coinbase address).
+<img src="docs/five.png" width="200px">
+<img src="docs/six.png" width="200px">
 
-#### 5: paste private address to input form.
+#### 4: paste private key to input form.
 <img src="docs/four.png" width="200px">
 
-#### 6: change network to localhost 8545.
-<img src="docs/three.png" width="200px">
+#### 5: change network to custom localhost 7545.
+<img src="docs/seven.png" width="200px">
+
+### Truffle
+#### Compile contract
+```
+truffle compile
+```
+#### Migrate to blockchain
+```
+truffle migrate
+```
+
+### Run server 
+```
+cd client
+yarn
+yarn start
+```
 
 ## Referenses
-#### Setting up for ganecha client address to metamask wallet.
+#### Setting up for Ganache client, address to metamask wallet.
 https://tech.drecom.co.jp/go_to_the_dapps_world/
 
 #### Learn about contract call and send method.
