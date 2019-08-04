@@ -184,8 +184,8 @@
           }
         ],
         "contractDependencies": [
-          1302,
-          375
+          375,
+          1302
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -434,8 +434,8 @@
           }
         ],
         "contractDependencies": [
-          1302,
-          375
+          375,
+          1302
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -638,12 +638,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xffFA6DfDBC6A828aebF639d35304800Eca2e288C",
-      "transactionHash": "0x14c658d3aecdb4fbeaa46fe962b3191c2f838eaf79d131828fff1f741d935aaa"
+      "address": "0x045e0fE2BCc16B541A8bCeB1F79Da03eC8f865aE",
+      "transactionHash": "0x6f692ca7aa32141893213833d26d2b60b44e6897b9ef021ab9ee349ee3e01df8"
     }
   },
   "schemaVersion": "3.0.11",
-  "updatedAt": "2019-07-10T14:02:30.563Z",
+  "updatedAt": "2019-08-01T10:34:51.555Z",
   "devdoc": {
     "methods": {
       "buyTokens(address)": {

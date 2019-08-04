@@ -3,6 +3,7 @@ import Web3 from "web3";
 
 import CuronCoinSaleContract from "./contracts/CuronCoinSale.json";
 import { nodeUrl } from './urls';
+import { strict } from "assert";
 
 class App extends Component {
   state = { 
@@ -35,7 +36,7 @@ class App extends Component {
       const weiAmount = this.state.web3.utils.toWei(this.state.value, "ether");
       this.state.instance.methods
         .buyTokens(this.state.users[0])
-        .send({value: weiAmount, from: this.state.users[0]}).on('transactionHash', hash => console.warn(hash));
+        .send({value: weiAmount, from: this.state.users[0], gas: 3000000}).on('transactionHash', hash => alert('Success for buying CURON!' + String(hash)));
 
     } else {
       alert(`Please input valid ETH amount.`);
